@@ -1,0 +1,435 @@
+/* ============================================================
+   StadiumCompany — style.css
+   Thème : sombre, bleu/rouge, identité stade
+   ============================================================ */
+
+/* ---------- Variables ---------- */
+:root {
+    --sc-blue:       #1a6bff;
+    --sc-blue-dark:  #0d47c8;
+    --sc-red:        #e8203a;
+    --sc-red-dark:   #b5172d;
+    --sc-dark:       #0a0c10;
+    --sc-dark-2:     #12151c;
+    --sc-dark-3:     #1c2030;
+    --sc-dark-4:     #252a38;
+    --sc-light:      #f0f2f8;
+    --sc-muted:      #8892a4;
+    --sc-white:      #ffffff;
+    --sc-gradient:   linear-gradient(135deg, var(--sc-blue) 0%, var(--sc-red) 100%);
+    --sc-gradient-r: linear-gradient(135deg, var(--sc-red) 0%, var(--sc-blue) 100%);
+    --sc-font-display: 'Bebas Neue', sans-serif;
+    --sc-font-body:    'Inter', sans-serif;
+    --sc-radius:     8px;
+    --sc-radius-lg:  16px;
+    --sc-transition: 0.25s ease;
+}
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--sc-font-body);
+    background-color: var(--sc-dark);
+    color: var(--sc-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+a { color: var(--sc-blue); text-decoration: none; transition: color var(--sc-transition); }
+a:hover { color: var(--sc-red); }
+
+img { max-width: 100%; height: auto; }
+
+/* ---------- Navbar ---------- */
+.sc-navbar {
+    background: rgba(10, 12, 16, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26, 107, 255, 0.2);
+    padding: 0.75rem 0;
+    z-index: 1030;
+}
+
+.sc-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.sc-logo-icon {
+    font-size: 1.6rem;
+    background: var(--sc-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sc-logo-text {
+    font-family: var(--sc-font-display);
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    color: var(--sc-white);
+    line-height: 1;
+}
+
+.sc-logo-text span {
+    background: var(--sc-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sc-nav-link {
+    font-family: var(--sc-font-body);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    color: var(--sc-muted) !important;
+    padding: 0.5rem 0.85rem !important;
+    border-radius: var(--sc-radius);
+    transition: color var(--sc-transition), background var(--sc-transition);
+    text-transform: uppercase;
+}
+
+.sc-nav-link:hover,
+.sc-nav-link.active {
+    color: var(--sc-white) !important;
+    background: rgba(26, 107, 255, 0.12);
+}
+
+.sc-nav-link.active {
+    color: var(--sc-blue) !important;
+}
+
+/* Bouton connexion */
+.sc-btn-login {
+    background: var(--sc-gradient);
+    color: var(--sc-white) !important;
+    border: none;
+    border-radius: var(--sc-radius);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.45rem 1.1rem;
+    transition: opacity var(--sc-transition), transform var(--sc-transition);
+}
+
+.sc-btn-login:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+    color: var(--sc-white) !important;
+}
+
+/* Bouton utilisateur connecté */
+.sc-btn-user {
+    background: rgba(26, 107, 255, 0.15);
+    color: var(--sc-white) !important;
+    border: 1px solid rgba(26, 107, 255, 0.35);
+    border-radius: var(--sc-radius);
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.45rem 1rem;
+    transition: background var(--sc-transition);
+}
+
+.sc-btn-user:hover {
+    background: rgba(26, 107, 255, 0.28);
+    color: var(--sc-white) !important;
+}
+
+.sc-dropdown {
+    background: var(--sc-dark-3);
+    border: 1px solid rgba(26, 107, 255, 0.2);
+    border-radius: var(--sc-radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    min-width: 200px;
+}
+
+.sc-dropdown .dropdown-item {
+    color: var(--sc-light);
+    font-size: 0.875rem;
+    padding: 0.55rem 1rem;
+    transition: background var(--sc-transition), color var(--sc-transition);
+}
+
+.sc-dropdown .dropdown-item:hover {
+    background: rgba(26, 107, 255, 0.15);
+    color: var(--sc-white);
+}
+
+.sc-dropdown .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Boutons globaux ---------- */
+.sc-btn-primary {
+    background: var(--sc-gradient);
+    color: var(--sc-white);
+    border: none;
+    border-radius: var(--sc-radius);
+    font-weight: 600;
+    padding: 0.65rem 1.5rem;
+    transition: opacity var(--sc-transition), transform var(--sc-transition);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sc-btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+    color: var(--sc-white);
+}
+
+.sc-btn-outline {
+    background: transparent;
+    color: var(--sc-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--sc-radius);
+    font-weight: 500;
+    padding: 0.65rem 1.5rem;
+    transition: border-color var(--sc-transition), background var(--sc-transition);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sc-btn-outline:hover {
+    border-color: var(--sc-blue);
+    background: rgba(26, 107, 255, 0.1);
+    color: var(--sc-white);
+}
+
+/* ---------- Sections ---------- */
+.sc-section {
+    padding: 80px 0;
+}
+
+.sc-section-title {
+    font-family: var(--sc-font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 2px;
+    color: var(--sc-white);
+    margin-bottom: 0.25rem;
+}
+
+.sc-section-subtitle {
+    color: var(--sc-muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+}
+
+.sc-accent-line {
+    width: 50px;
+    height: 3px;
+    background: var(--sc-gradient);
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}
+
+/* ---------- Cards ---------- */
+.sc-card {
+    background: var(--sc-dark-3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--sc-radius-lg);
+    overflow: hidden;
+    transition: transform var(--sc-transition), border-color var(--sc-transition), box-shadow var(--sc-transition);
+}
+
+.sc-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(26, 107, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(26, 107, 255, 0.12);
+}
+
+.sc-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: var(--sc-dark-4);
+}
+
+.sc-card-body {
+    padding: 1.25rem;
+}
+
+.sc-card-title {
+    font-family: var(--sc-font-display);
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    color: var(--sc-white);
+    margin-bottom: 0.4rem;
+}
+
+.sc-card-text {
+    color: var(--sc-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* ---------- Badge ---------- */
+.sc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.sc-badge-blue  { background: rgba(26, 107, 255, 0.15); color: var(--sc-blue); border: 1px solid rgba(26, 107, 255, 0.3); }
+.sc-badge-red   { background: rgba(232, 32, 58, 0.15);  color: var(--sc-red);  border: 1px solid rgba(232, 32, 58, 0.3); }
+.sc-badge-green { background: rgba(34, 197, 94, 0.15);  color: #22c55e;        border: 1px solid rgba(34, 197, 94, 0.3); }
+
+/* ---------- Footer ---------- */
+.sc-footer {
+    background: var(--sc-dark-2);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: auto;
+}
+
+.sc-footer-top { padding: 60px 0 40px; }
+
+.sc-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sc-footer-desc {
+    color: var(--sc-muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    max-width: 300px;
+}
+
+.sc-footer-title {
+    font-family: var(--sc-font-display);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--sc-white);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+
+.sc-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.sc-footer-links a,
+.sc-footer-links span {
+    color: var(--sc-muted);
+    font-size: 0.875rem;
+    transition: color var(--sc-transition);
+}
+
+.sc-footer-links a:hover { color: var(--sc-blue); }
+
+.sc-footer-locations li,
+.sc-footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--sc-muted);
+    font-size: 0.85rem;
+}
+
+.sc-footer-locations i,
+.sc-footer-contact i {
+    color: var(--sc-blue);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.sc-social-links { display: flex; gap: 10px; }
+
+.sc-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sc-dark-4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sc-muted);
+    font-size: 0.9rem;
+    transition: background var(--sc-transition), color var(--sc-transition), border-color var(--sc-transition);
+}
+
+.sc-social-link:hover {
+    background: var(--sc-blue);
+    color: var(--sc-white);
+    border-color: var(--sc-blue);
+}
+
+.sc-btn-footer-contact {
+    background: transparent;
+    border: 1px solid rgba(26, 107, 255, 0.4);
+    color: var(--sc-blue);
+    border-radius: var(--sc-radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    transition: all var(--sc-transition);
+    display: inline-flex;
+    align-items: center;
+}
+
+.sc-btn-footer-contact:hover {
+    background: var(--sc-blue);
+    color: var(--sc-white);
+    border-color: var(--sc-blue);
+}
+
+.sc-footer-bottom {
+    background: var(--sc-dark);
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sc-footer-bottom p,
+.sc-footer-legal-links a {
+    color: var(--sc-muted);
+    font-size: 0.8rem;
+}
+
+.sc-footer-legal-links a:hover { color: var(--sc-blue); }
+
+/* ---------- Utilitaires ---------- */
+.text-gradient {
+    background: var(--sc-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bg-sc-dark-3 { background: var(--sc-dark-3); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+    .sc-navbar .navbar-collapse {
+        background: var(--sc-dark-2);
+        padding: 1rem;
+        border-radius: var(--sc-radius);
+        margin-top: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sc-auth-btn { margin-top: 0.75rem; }
+    .sc-section { padding: 50px 0; }
+}
