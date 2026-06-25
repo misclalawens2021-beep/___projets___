@@ -52,27 +52,27 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <ul class="navbar-nav mx-auto gap-1">
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'index.php' ? 'active' : '' ?>"
-                       href="/index.php">Accueil</a>
+                       href="./index.php">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'evenements.php' ? 'active' : '' ?>"
-                       href="/pages/evenements.php">Événements</a>
+                       href="./includes/evenements.php">Événements</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'billetterie.php' ? 'active' : '' ?>"
-                       href="/pages/billetterie.php">Billetterie</a>
+                       href="./includes/billetterie.php">Billetterie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'restauration.php' ? 'active' : '' ?>"
-                       href="/pages/restauration.php">Restauration</a>
+                       href="./includes/restauration.php">Restauration</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'boutique.php' ? 'active' : '' ?>"
-                       href="/pages/boutique.php">Boutique</a>
+                       href="./includes/boutique.php">Boutique</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link sc-nav-link <?= $current_page === 'contact.php' ? 'active' : '' ?>"
-                       href="/pages/contact.php">Contact</a>
+                       href="./includes/contact.php">Contact</a>
                 </li>
             </ul>
 
@@ -93,14 +93,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             </li>
                             <?php if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <li>
-                                <a class="dropdown-item" href="/pages/admin/index.php">
+                                <a class="dropdown-item" href="./index.php">
                                     <i class="bi bi-gear-fill me-2"></i>Administration
                                 </a>
                             </li>
                             <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item text-danger" href="/pages/logout.php">
+                                <a class="dropdown-item text-danger" href="./includes/logout.php">
                                     <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
                                 </a>
                             </li>
@@ -108,7 +108,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </div>
                 <?php else: ?>
                     <!-- Non connecté -->
-                    <a href="/pages/login.php" class="btn sc-btn-login">
+                    <a href="./includes/login.php" class="btn sc-btn-login">
                         <i class="bi bi-person-fill me-2"></i>Connexion
                     </a>
                 <?php endif; ?>
