@@ -1,7 +1,124 @@
 <?php
-$page_title = 'Accueil';
-require_once 'includes/header.php';
+// Démarrage de session si pas déjà démarrée
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Page active pour surligner le lien courant dans la navbar
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= isset($page_title) ? htmlspecialchars($page_title) . ' — StadiumCompany' : 'StadiumCompany' ?></title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- CSS principal -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <?php if (isset($extra_css)): ?>
+        <?= $extra_css ?>
+    <?php endif; ?>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="navbar navbar-expand-lg navbar-dark sc-navbar sticky-top">
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand sc-logo" href="/index.php">
+            <span class="sc-logo-icon"><i class="bi bi-shield-fill"></i></span>
+            <span class="sc-logo-text">STADIUM<span>COMPANY</span></span>
+        </a>
+
+        <!-- Toggle mobile -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Liens de navigation -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mx-auto gap-1">
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'index.php' ? 'active' : '' ?>"
+                       href="/index.php">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'evenements.php' ? 'active' : '' ?>"
+                       href="/pages/evenements.php">Événements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'billetterie.php' ? 'active' : '' ?>"
+                       href="/pages/billetterie.php">Billetterie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'restauration.php' ? 'active' : '' ?>"
+                       href="/pages/restauration.php">Restauration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'boutique.php' ? 'active' : '' ?>"
+                       href="/pages/boutique.php">Boutique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sc-nav-link <?= $current_page === 'contact.php' ? 'active' : '' ?>"
+                       href="/pages/contact.php">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Bouton connexion / profil utilisateur -->
+            <div class="sc-auth-btn">
+                <?php if (isset($_SESSION['user'])): ?>
+                    <!-- Utilisateur connecté -->
+                    <div class="dropdown">
+                        <button class="btn sc-btn-user dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <?= htmlspecialchars($_SESSION['user']['prenom'] ?? 'Mon compte') ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end sc-dropdown">
+                            <li>
+                                <a class="dropdown-item" href="/pages/dashboard.php">
+                                    <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+                                </a>
+                            </li>
+                            <?php if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'admin'): ?>
+                            <li>
+                                <a class="dropdown-item" href="/pages/admin/index.php">
+                                    <i class="bi bi-gear-fill me-2"></i>Administration
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="/pages/logout.php">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <!-- Non connecté -->
+                    <a href="/pages/login.php" class="btn sc-btn-login">
+                        <i class="bi bi-person-fill me-2"></i>Connexion
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+</nav>
+<!-- ===================== FIN NAVBAR ===================== -->
+
 
 <!-- ===================== HERO — CARROUSEL ===================== -->
 <section class="sc-hero">
@@ -272,87 +389,126 @@ require_once 'includes/header.php';
     </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<!-- ===================== FOOTER ===================== -->
+<footer class="sc-footer mt-auto">
 
-<!-- CSS spécifique à la page d'accueil -->
-<style>
-/* Hero */
-.sc-hero { position: relative; }
-.sc-slide {
-    height: 580px;
-    background: var(--sc-dark);
-    background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(26,107,255,0.35) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(232,32,58,0.3) 0%, transparent 60%);
-}
-.sc-slide-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, rgba(10,12,16,0.85) 40%, rgba(10,12,16,0.2));
-}
-.sc-slide-content {
-    position: relative; z-index: 2;
-    max-width: 600px;
-}
-.sc-hero-title {
-    font-family: var(--sc-font-display);
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    letter-spacing: 3px;
-    line-height: 1.05;
-    color: var(--sc-white);
-    margin-bottom: 1rem;
-}
-.sc-hero-subtitle {
-    color: rgba(240,242,248,0.75);
-    font-size: 1.05rem;
-    max-width: 480px;
-}
-.sc-carousel-ctrl {
-    width: 48px; height: 48px;
-    background: rgba(26,107,255,0.2);
-    border: 1px solid rgba(26,107,255,0.4);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    top: 50%; transform: translateY(-50%);
-    transition: background var(--sc-transition);
-}
-.sc-carousel-ctrl:hover { background: var(--sc-blue); }
-.sc-carousel-ctrl.carousel-control-prev { left: 20px; }
-.sc-carousel-ctrl.carousel-control-next { right: 20px; }
-.carousel-indicators button {
-    width: 30px; height: 3px;
-    border-radius: 2px;
-    background: rgba(255,255,255,0.4);
-    border: none;
-}
-.carousel-indicators button.active { background: var(--sc-blue); width: 50px; }
+    <div class="sc-footer-top">
+        <div class="container">
+            <div class="row gy-4">
 
-/* Stats bar */
-.sc-stats-bar {
-    background: var(--sc-dark-3);
-    border-top: 1px solid rgba(26,107,255,0.15);
-    border-bottom: 1px solid rgba(26,107,255,0.15);
-    padding: 28px 0;
-}
-.sc-stat-item { padding: 12px; }
-.sc-stat-item + .sc-stat-item { border-left: 1px solid rgba(255,255,255,0.06); }
-.sc-stat-number {
-    font-family: var(--sc-font-display);
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-    background: var(--sc-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.sc-stat-label { color: var(--sc-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+                <!-- Colonne 1 — Logo & description -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sc-footer-brand">
+                        <span class="sc-logo-icon"><i class="bi bi-shield-fill"></i></span>
+                        <span class="sc-logo-text">STADIUM<span>COMPANY</span></span>
+                    </div>
+                    <p class="sc-footer-desc mt-3">
+                        Le stade multi-événements de référence. Matchs, concerts, spectacles —
+                        vivez des expériences inoubliables.
+                    </p>
+                    <div class="sc-social-links mt-3">
+                        <a href="#" class="sc-social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="sc-social-link" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="sc-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="sc-social-link" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
 
-/* Reveal animation */
-.sc-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.sc-revealed { opacity: 1; transform: translateY(0); }
+                <!-- Colonne 2 — Navigation -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="sc-footer-title">Navigation</h6>
+                    <ul class="sc-footer-links">
+                        <li><a href="/index.php">Accueil</a></li>
+                        <li><a href="/pages/evenements.php">Événements</a></li>
+                        <li><a href="/pages/billetterie.php">Billetterie</a></li>
+                        <li><a href="/pages/restauration.php">Restauration</a></li>
+                        <li><a href="/pages/boutique.php">Boutique</a></li>
+                        <li><a href="/pages/apropos.php">À propos</a></li>
+                    </ul>
+                </div>
 
-@media (max-width: 767px) {
-    .sc-slide { height: 500px; }
-    .sc-stat-item + .sc-stat-item { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
-}
-</style>
+                <!-- Colonne 3 — Nos sites -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="sc-footer-title">Nos sites</h6>
+                    <ul class="sc-footer-links sc-footer-locations">
+                        <li>
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <div>
+                                <strong>Stade Principal</strong><br>
+                                <small>1 Avenue du Stade, Paris</small>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-ticket-fill me-2"></i>
+                            <div>
+                                <strong>Billetterie Centre-ville</strong><br>
+                                <small>45 Rue du Commerce, Paris</small>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-bag-fill me-2"></i>
+                            <div>
+                                <strong>Boutique Souvenirs</strong><br>
+                                <small>12 Boulevard des Sports, Paris</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 4 — Contact -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="sc-footer-title">Contact</h6>
+                    <ul class="sc-footer-links sc-footer-contact">
+                        <li>
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <a href="mailto:contact@stadiumcompany.com">contact@stadiumcompany.com</a>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-clock-fill me-2"></i>
+                            <span>Lun – Ven : 9h – 18h</span>
+                        </li>
+                    </ul>
+                    <a href="/pages/contact.php" class="btn sc-btn-footer-contact mt-3">
+                        <i class="bi bi-chat-dots-fill me-2"></i>Nous contacter
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre du bas -->
+    <div class="sc-footer-bottom">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <p class="mb-0 small">
+                &copy; <?= date('Y') ?> StadiumCompany. Tous droits réservés.
+            </p>
+            <div class="sc-footer-legal-links">
+                <a href="/pages/mentions-legales.php">Mentions légales</a>
+                <span class="mx-2">·</span>
+                <a href="/pages/mentions-legales.php#cgu">CGU</a>
+                <span class="mx-2">·</span>
+                <a href="/pages/mentions-legales.php#confidentialite">Confidentialité</a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- ===================== FIN FOOTER ===================== -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS principal -->
+<script src="/assets/js/main.js"></script>
+
+<?php if (isset($extra_js)): ?>
+    <?= $extra_js ?>
+<?php endif; ?>
+
+</body>
+</html>
